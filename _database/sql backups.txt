@@ -1,0 +1,30 @@
+CREATE TABLE coupons (
+	id int(10) not null PRIMARY KEY AUTO_INCREMENT,
+    couponcode varchar(128) not null
+);
+
+CREATE TABLE formdatas (
+	id int(10) not null PRIMARY KEY AUTO_INCREMENT,
+    name varchar(128) not null,
+    email varchar(128) not null,
+    ccode varchar(128) not null
+);
+
+
+---- INSERT --------------------------
+INSERT INTO coupons(couponcode) VALUES ('a1');
+
+---- SELECT --------------------------
+SELECT * FROM coupons WHERE couponcode='a1'
+
+---- UPDATE --------------------------
+UPDATE coupons
+set couponcode='aa1'
+WHERE couponcode='a1'
+
+---- DELETE --------------------------
+DELETE FROM coupons
+WHERE id='4'
+ 
+---- ORDER BY --------------------------
+SELECT * FROM coupons ORDERBY id ASC
