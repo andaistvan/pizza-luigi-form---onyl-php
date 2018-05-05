@@ -1,6 +1,3 @@
-<?php 
-	include_once 'includes/dbh.inc.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +5,14 @@
 	<title>TV kupon</title>
 </head>
 <body>
-
-<?php 
-	$sql = "SELECT * FROM coupons;";
-	$result = mysqli_query($conn, $sql);
-	$resultCheck = mysqli_num_rows($result);
-
-	if ($resultCheck > 0) {
-		while ($row = mysqli_fetch_assoc($result)) {
-			echo $row['couponcode']. "<br>";
-		}
-	}
-
- ?>
-
+	<form action="includes/signup.inc.php" method="POST">
+		<input type="text" name="name" placeholder="név">
+		<br>
+		<input type="text" name="email" placeholder="e-mail">
+		<br>
+		<input type="text" name="ccode" placeholder="kupon kód">
+		<br>
+		<button type="submit" name="submit">Submit</button>
+	</form>
 </body>
 </html>
