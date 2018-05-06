@@ -6,26 +6,33 @@
 		$email = $_POST['email'];
 		$ccode = $_POST['ccode'];
 
-		//coupon code compare
-		$sql = "SELECT * FROM coupons WHERE couponcode=$ccode;";
-		$result = mysqli_query($conn, $sql);
-
-		echo 'beírt code: '. $ccode. "<br>";
-		echo 'sql var: '.$sql."<br>";
-
-
-		
-		if ($sql) {
-			echo 'fasza';
+		// error handleers
+		// check inputs are empty
+		if (empty($ccode)) {
+			echo 'írj kódot fasz!';
+			header("Location: ../index.php?login=empty");
+			exit();
 		} else {
-			echo 'nem fasza';
+			$sql = "SELECT * FROM coupons WHERE couponcode='$ccode'";
+			$result = mysqli_query($conn, $sql);
+			$resultCheck = mysqli_num_rows($result);
+			if ($resultCheck < 1) {
+				header("Location: ../index.php?login=error");
+				echo 'érvénytelen kód';
+				exit();
+			} else {
+				if ($row = mysqli_fetch_assoc($result)) {
+					echo 'row kód '.$row['couponcode'];
+					echo ' érvényes kód';
+				}
+				// save form datas to database
+				// 
+				// send email
+			}
 		}
-
-		// echo $sql;
-		//teszt
-		// echo $name;
-		// echo $email;
-		// echo $ccode;
+		
+		echo '<br>beírt code: '. $ccode. "<br>";
+		// echo 'resultcheck var: '.$resultCheck."<br>";
 
 		//mail
 		// $mailTo = "andaistvan@gmail.com"; 
