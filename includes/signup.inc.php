@@ -22,26 +22,27 @@
 				exit();
 			} else {
 				if ($row = mysqli_fetch_assoc($result)) {
-					echo 'row kód '.$row['couponcode'];
+					echo 'kód check '.$row['couponcode'];
 					echo ' érvényes kód';
 				}
 				// save form datas to database
-				// 
+				$sql = "INSERT INTO formdatas(name, email, ccode) VALUES ('$name', '$email', '$ccode');";
+				mysqli_query($conn, $sql);
+				// save form datas to database
+				
+				// send email
+				$mailTo = "andaistvan@gmail.com"; 
+				$headers = "From: ".$email;
+				$txt = "Űrlap regsiztráció: ". $name.".\n\n".$email.".\n\n".$ccode;
+
+				mail($mailTo, $headers, $txt);
+				header("Location: ../index.php?mailsend");
 				// send email
 			}
 		}
 		
 		echo '<br>beírt code: '. $ccode. "<br>";
-		// echo 'resultcheck var: '.$resultCheck."<br>";
-
-		//mail
-		// $mailTo = "andaistvan@gmail.com"; 
-		// $headers = "From: ".$email;
-		// $txt = "Űrlap regsiztráció: ". $name.".\n\n".$email.".\n\n".$ccode;
-
-		// mail($mailTo, $headers, $txt);
-		// header("Location: ../index.php?mailsend");
-		//mail
+	
 	}
 
 	
