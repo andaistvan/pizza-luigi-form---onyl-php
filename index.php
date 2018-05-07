@@ -16,6 +16,21 @@
 			<br>
 			<button type="submit" name="submit">Submit</button>
 		</form>
+
+		<?php
+			$fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+			if (strpos($fullUrl, "signup=empty") == true) {
+				echo "<p class='error'>Minden mezőt kötelező kitölteni!</p>";
+			}
+			else if (strpos($fullUrl, "code=error") == true) {
+				echo "<p class='error'>Hibás kód!</p>";
+			}
+			elseif (strpos($fullUrl, "mailsend") == true) {
+				echo "<p class='error'>Email sikeresen elküldve</p>";
+			}
+		?>
+
 	</main>
 </body>
 </html>

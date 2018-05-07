@@ -1,6 +1,7 @@
 <?php
 	include_once 'dbh.inc.php';
 
+	// input fields value to variables
 	if (isset($_POST['submit'])) {
 		$name = $_POST['name'];
 		$email = $_POST['email'];
@@ -8,47 +9,33 @@
 
 		// error handleers
 		// check inputs are empty
-		if (empty($ccode)) {
-			echo 'írj kódot fasz!';
-			header("Location: ../index.php?login=empty");
+		if (empty($name) || empty($email) || empty($ccode)) {			
+			header("Location: ../index.php?signup=empty");
 			exit();
+
+		// email validation !!!!
+
 		} else {
+			// check copuoncode in database
 			$sql = "SELECT * FROM coupons WHERE couponcode='$ccode'";
 			$result = mysqli_query($conn, $sql);
 			$resultCheck = mysqli_num_rows($result);
 			if ($resultCheck < 1) {
-				header("Location: ../index.php?login=error");
-				echo 'érvénytelen kód';
+				header("Location: ../index.php?code=error");
+				// echo 'érvénytelen kód';
 				exit();
-			} else {
-				if ($row = mysqli_fetch_assoc($result)) {
-					echo 'kód check '.$row['couponcode'];
-					echo ' érvényes kód';
-				}
+			} else {		
 				// save form datas to database
 				$sql = "INSERT INTO formdatas(name, email, ccode) VALUES ('$name', '$email', '$ccode');";
 				mysqli_query($conn, $sql);
-				// save form datas to database
-				
+								
 				// send email
 				$mailTo = "andaistvan@gmail.com"; 
 				$headers = "From: ".$email;
 				$txt = "Űrlap regsiztráció: ". $name.".\n\n".$email.".\n\n".$ccode;
-
+				// admin mail
 				mail($mailTo, $headers, $txt);
-				header("Location: ../index.php?mailsend");
-				// send email
+				header("Location: ../index.php?mailsend");				
 			}
-		}
-		
-		echo '<br>beírt code: '. $ccode. "<br>";
-	
+		}		
 	}
-
-	
-
-// validation
-// read from coupons
-	
-
-
